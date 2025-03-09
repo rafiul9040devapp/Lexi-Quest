@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lexi_quest/core/get_it/get_it.dart';
-import 'package:lexi_quest/core/router/app_router.dart';
 import 'package:lexi_quest/core/theme/extensions.dart';
 import 'package:lexi_quest/features/game/presentation/page/game_page.dart';
 import 'package:lexi_quest/features/home/widgets/slider_selection_widget.dart';
-
 import '../../game/presentation/bloc/game_bloc.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,85 +22,82 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<GameBloc>(),
-      child: Scaffold(
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Guess It',
-                  style: context.textTheme.headlineLarge?.copyWith(
-                      letterSpacing: 2, color: context.colorScheme.primary),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  'By DevVibe Youtube',
-                  style: context.textTheme.headlineMedium
-                      ?.copyWith(fontWeight: FontWeight.w400, letterSpacing: 2),
-                ),
-                SizedBox(height: 16),
-                Text(
-                  'Choose your game settings',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .bodyLarge
-                      ?.copyWith(fontSize: 20),
-                ),
-                SizedBox(height: 32),
-                SliderSelectionWidget(
-                  title: 'Word Length',
-                  value: wordLength,
-                  minValue: 4,
-                  maxValue: 7,
-                  divisions: 3,
-                  onChanged: (value) {
-                    setState(() {
-                      wordLength = value;
-                    });
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Guess It',
+                style: context.textTheme.headlineLarge?.copyWith(
+                    letterSpacing: 2, color: context.colorScheme.primary),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'By DevVibe Youtube',
+                style: context.textTheme.headlineMedium
+                    ?.copyWith(fontWeight: FontWeight.w400, letterSpacing: 2),
+              ),
+              SizedBox(height: 16),
+              Text(
+                'Choose your game settings',
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.copyWith(fontSize: 20),
+              ),
+              SizedBox(height: 32),
+              SliderSelectionWidget(
+                title: 'Word Length',
+                value: wordLength,
+                minValue: 4,
+                maxValue: 7,
+                divisions: 3,
+                onChanged: (value) {
+                  setState(() {
+                    wordLength = value;
+                  });
+                },
+              ),
+              SizedBox(height: 32),
+              SliderSelectionWidget(
+                title: 'Attempts Count',
+                value: attemptsCount,
+                minValue: 3,
+                maxValue: 7,
+                divisions: 4,
+                onChanged: (value) {
+                  setState(() {
+                    attemptsCount = value;
+                  });
+                },
+              ),
+              Spacer(),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    context.push(GamePage.route(
+                        wordLength: wordLength.toInt(),
+                        attemptsCount: attemptsCount.toInt()));
                   },
-                ),
-                SizedBox(height: 32),
-                SliderSelectionWidget(
-                  title: 'Attempts Count',
-                  value: attemptsCount,
-                  minValue: 3,
-                  maxValue: 7,
-                  divisions: 4,
-                  onChanged: (value) {
-                    setState(() {
-                      attemptsCount = value;
-                    });
-                  },
-                ),
-                Spacer(),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      context.push(GamePage.route(
-                          wordLength: wordLength.toInt(),
-                          attemptsCount: attemptsCount.toInt()));
-                    },
-                    style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 16),
-                        backgroundColor: context.colorScheme.primary,
-                        foregroundColor: context.colorScheme.surface,
-                        elevation: 5,
-                        shadowColor: Colors.blue.withOpacity(.3)),
-                    child: Text(
-                      'Start Game',
-                      style: context.textTheme.headlineSmall
-                          ?.copyWith(fontWeight: FontWeight.bold),
-                    ),
+                  style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      backgroundColor: context.colorScheme.primary,
+                      foregroundColor: context.colorScheme.surface,
+                      elevation: 5,
+                      shadowColor: Colors.blue.withOpacity(.3)),
+                  child: Text(
+                    'Start Game',
+                    style: context.textTheme.headlineSmall
+                        ?.copyWith(fontWeight: FontWeight.bold),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

@@ -7,7 +7,6 @@ part 'game_state.dart';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
   GameBloc() : super(GameState.initial()) {
-
     on<StartGameEvent>(onStartGameEvent);
   }
 
@@ -15,6 +14,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     emit(state.copyWith(
       status: GameStatus.inProgress,
       word: 'TEST',
+      currentAttempts: 'TGS',
+      attempts: ['GETH'],
       attemptsCount: event.attemptsCount
     ));
 
